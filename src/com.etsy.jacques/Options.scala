@@ -7,6 +7,7 @@ import org.scala_tools.javautils.Imports._
 class Options(opts : OptionSet) {
   lazy val port = opts.valueOf("port").asInstanceOf[Int]
   lazy val host = opts.valueOf("host").toString
+
 }
 
 

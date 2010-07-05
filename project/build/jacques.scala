@@ -8,11 +8,12 @@ class JacquesProject(info : ProjectInfo) extends ProguardProject(info) {
   override def testScalaSourcePath = "tests"
   override def mainResourcesPath = "lib"
 
-  override def proguardOptions = 
-    "-keep class com.etsy.** { *; }" :: proguardKeepAllScala :: 
-    "-keep class joptsimple.** { *; }" :: 
-    "-keep class org.scala_tools.** { *; }" :: Nil
+  def keep(pkg : String) = "-keep class %s.** { *; }".format(pkg)
 
+  override def proguardOptions = 
+    keep("com.etsy") :: proguardKeepAllScala :: 
+    keep("joptsimple") :: keep("org.scala_tools") :: keep("com.sun.jdi") :: Nil
+    
   def scalaLibraryJarPath = Path.fromFile(scalaLibraryJar)
   override def proguardInJars = super.proguardInJars +++ scalaLibraryJarPath
 

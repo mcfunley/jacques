@@ -1,8 +1,10 @@
 import sbt._
+import Process._
 
 
+class JacquesProject(info : ProjectInfo) extends ProguardProject(info) 
+  with TestApplication {
 
-class JacquesProject(info : ProjectInfo) extends ProguardProject(info) {
   override def outputDirectoryName = "build"
   override def mainScalaSourcePath = "src"
   override def testScalaSourcePath = "tests"
@@ -23,5 +25,6 @@ class JacquesProject(info : ProjectInfo) extends ProguardProject(info) {
   val javautils = "org.scala-tools" % "javautils" % "2.7.4-0.1" % "compile"
 
   val scalatest = "org.scalatest" % "scalatest" % "1.0" % "test->default"
+
 }
 

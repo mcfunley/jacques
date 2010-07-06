@@ -9,3 +9,4 @@ target/
 lib_managed/
 tests/testapp/manifest.mf
 tests/testapp/testapp.jar
+testapp.pid

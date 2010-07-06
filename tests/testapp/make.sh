@@ -1,10 +1,15 @@
 #!/bin/bash
+# invoke from project base directory. 
 
-./clean.sh
-echo "Main-Class: Test" > manifest.mf
-sl=`find ../../project -name '*scala-library.jar'`
-echo "Class-Path: $sl" >> manifest.mf
+dir=`dirname $0`
 
-mkdir build
-scalac test.scala -d build
-jar cvfm testapp.jar manifest.mf -C build/ .
+manifest="$dir/manifest.mf"
+$dir/clean.sh
+echo "Main-Class: Test" > $manifest
+sl=`find project -name '*scala-library.jar'`
+echo "Class-Path: $PWD/$sl" >> $manifest
+
+build="$dir/build"
+mkdir $build
+scalac $dir/test.scala -d $build
+jar cvfm $dir/testapp.jar $manifest -C $build/ .

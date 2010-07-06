@@ -29,23 +29,16 @@ object Jacques {
 
     val vm = connector.attach(connargs)
     suspending(vm) {
-      threadSummary(vm)
+      printThreadSummaries(vm)
     }
   }
 
 
-  private def threadSummary(vm : VirtualMachine) {
+  private def printThreadSummaries(vm : VirtualMachine) {
     println("\nThread Summary")
     var i = 0
     vm.allThreads.asScala.foreach { t =>
-      if(t.frameCount > 0) {
-        val sf = t.frame(0)
-        val loc = sf.location
-        println("%s. Thread %s at %s (%s)".format(
-          i, t.name, loc.sourceName, loc.sourcePath))
-      } else {
-        println("%s. Thread %s at <unknown>.".format(i, t.name))
-      }
+      println("%s. %s".format(i, threadSummary(t)))
       i += 1
     }
   }

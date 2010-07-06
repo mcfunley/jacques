@@ -25,6 +25,7 @@ class JacquesProject(info : ProjectInfo) extends ProguardProject(info)
   val javautils = "org.scala-tools" % "javautils" % "2.7.4-0.1" % "compile"
 
   val scalatest = "org.scalatest" % "scalatest" % "1.0" % "test->default"
+  val mockito = "org.mockito" % "mockito-all" % "1.8.5" % "test->default"
 
 }
 

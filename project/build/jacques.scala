@@ -22,5 +22,6 @@ class JacquesProject(info : ProjectInfo) extends ProguardProject(info) {
   val jopt = "net.sf.jopt-simple" % "jopt-simple" % "3.2" % "compile"
   val javautils = "org.scala-tools" % "javautils" % "2.7.4-0.1" % "compile"
 
+  val scalatest = "org.scalatest" % "scalatest" % "1.0" % "test->default"
 }
 

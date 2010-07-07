@@ -7,6 +7,10 @@ import org.scala_tools.javautils.Imports._
 class Options(opts : OptionSet) {
   lazy val port = opts.valueOf("port").asInstanceOf[Int]
   lazy val host = opts.valueOf("host").toString
+  lazy val `package` = opts.valueOf("package") match {
+    case "" => None
+    case s : String => Some(s)
+  }
 
 }
 
@@ -27,6 +31,12 @@ object Options {
       .withRequiredArg
       .ofType(classOf[java.lang.String])
       .defaultsTo("localhost")
+
+    p
+      .acceptsAll(List("package").asJava, "Package to highlight.")
+      .withOptionalArg
+      .ofType(classOf[java.lang.String])
+      .defaultsTo("")
 
     val opts = p.parse(args : _*)
 

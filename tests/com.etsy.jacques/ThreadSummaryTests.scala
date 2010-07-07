@@ -4,6 +4,8 @@ import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 import org.mockito.Mockito._
 import com.sun.jdi._
+import com.etsy.jacques.Implicits._
+import Mocks._
 
 
 class ThreadSummarySpec extends Spec with ShouldMatchers {
@@ -17,27 +19,13 @@ class ThreadSummarySpec extends Spec with ShouldMatchers {
       threadSummary(t) should be ("Thread foo at <unknown>.")
     }
 
-    def mockedThread = { 
-      val t = mock(classOf[ThreadReference])
-      when(t.frameCount).thenReturn(3)
-      when(t.name).thenReturn("foo")
-
-      val loc0 = mock(classOf[Location])
-      when(loc0.sourceName).thenReturn("source.name")
-      when(loc0.sourcePath).thenReturn("source/path")
-
-      val f0 = mock(classOf[StackFrame])
-      when(f0.location).thenReturn(loc0)
-      when(t.frame(0)).thenReturn(f0)
-      t
-    }
-
     it("Should include the thread name") {
-      threadSummary(mockedThread) should include ("foo")
+      threadSummary(mockedThread) should include ("foothread")
     }
 
     it("Should summarize the top frame in the stack") {
-      threadSummary(mockedThread) should include ("source.name")
+      val t = mockedThread
+      threadSummary(mockedThread) should include (t.frame(0).location.format)
     }
 
   }

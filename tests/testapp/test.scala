@@ -1,3 +1,6 @@
+package com.etsy.test
+
+
 import scala.actors.Actor
 import scala.actors.Actor._
 import java.lang.management.ManagementFactory

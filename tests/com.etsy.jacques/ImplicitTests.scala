@@ -54,4 +54,32 @@ class ImplicitTests extends Spec with ShouldMatchers {
   }
 
 
+  describe("StackFrame.isInPackage") {
+    def packageFrame = {
+      val f = mockedStackFrame
+      when(f.location.declaringType.name).thenReturn("com.etsy.Blah")
+      f
+    }
+
+    it("should return true when the stack frame is located in the package") {
+      packageFrame.isInPackage("com.etsy") should be (true)
+    }
+
+    it("should return false when the stack frame is not in the package") {
+      packageFrame.isInPackage("com.etsy.blah") should be (false)
+    }
+  }
+
+
+  describe("ThreadReference.frameInPackage") {
+    it("should return the first frame in a particular package") {
+      val t = mockedThread
+      t.frameInPackage("com.etsy") should be (Some(t.frame(1)))
+    }
+
+    it("should return None when there are no frames in a particular package") {
+      mockedThread.frameInPackage("com.twitter") should be (None)
+    }
+  }
+
 }

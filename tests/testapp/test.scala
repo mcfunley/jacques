@@ -1,5 +1,4 @@
-package com.etsy.test
-
+package com.etsy.tests
 
 import scala.actors.Actor
 import scala.actors.Actor._

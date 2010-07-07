@@ -19,9 +19,13 @@ trait TestApplication extends BasicScalaProject {
   def runTestAppAction = {
     killTestAppAction
     log.info("running test application.")
+    val debugOpt = 
+      "-Xdebug " + 
+      "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
+
     new Thread(new Runnable {
       def run {
-        ("java -jar " + testAppJar) ! 
+        ("java %s -jar %s".format(debugOpt, testAppJar)) ! 
       }
     }).start
     while(!testAppPidfile.exists) {

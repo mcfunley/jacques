@@ -7,6 +7,8 @@ import org.scala_tools.javautils.Imports._
 
 object Jacques {
 
+  var options : Options = null
+
   def suspending[A](vm : VirtualMachine)(f : =>A) = {
     vm.suspend
     try {
@@ -18,21 +20,21 @@ object Jacques {
   
   
   def main(args : Array[String]) {
-    val opts = Options(args)
+    options = Options(args)
     val vmm = Bootstrap.virtualMachineManager
     val connector = vmm.attachingConnectors.asScala.first
     
-    println("Attaching to %s:%s".format(opts.host, opts.port))
+    println("Attaching to %s:%s".format(options.host, options.port))
     val connargs = connector.defaultArguments
-    connargs.get("port").setValue(opts.port.toString)
-    connargs.get("hostname").setValue(opts.host)
+    connargs.get("port").setValue(options.port.toString)
+    connargs.get("hostname").setValue(options.host)
 
     val vm = connector.attach(connargs)
     suspending(vm) {
       printThreadSummaries(vm)
     }
   }
-
+  
 
   private def printThreadSummaries(vm : VirtualMachine) {
     println("\nThread Summary")

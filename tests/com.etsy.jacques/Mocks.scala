@@ -22,7 +22,7 @@ object Mocks {
 
   def mockedReferenceType = {
     val t = mock(classOf[ReferenceType])
-    when(t.name).thenReturn("FizzBuzz")
+    when(t.name).thenReturn("com.fizz.FizzBuzz")
     t
   }
 
@@ -51,8 +51,23 @@ object Mocks {
     val t = mock(classOf[ThreadReference])
     when(t.frameCount).thenReturn(3)
     when(t.name).thenReturn("foothread")
-    val f = mockedStackFrame
-    when(t.frame(0)).thenReturn(f)
+    val f0 = mockedStackFrame
+    when(t.frame(0)).thenReturn(f0)
+
+    val f1 = mockedStackFrame
+    val t1 = mock(classOf[ReferenceType])
+    when(t1.name).thenReturn("com.etsy.FooBar")
+    when(f1.location.declaringType).thenReturn(t1)
+    when(t.frame(1)).thenReturn(f1)
+
+    val f2 = mockedStackFrame
+    val t2 = mock(classOf[ReferenceType])
+    when(t2.name).thenReturn("com.etsy.BlahBlah")
+    when(f2.location.declaringType).thenReturn(t2)
+    when(t.frame(2)).thenReturn(f2)
+
+    when(t.frames).thenReturn(List(f0, f1, f2).asJava)
+
     t
   }
   

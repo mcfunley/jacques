@@ -5,7 +5,7 @@ dir=`dirname $0`
 
 manifest="$dir/manifest.mf"
 $dir/clean.sh
-echo "Main-Class: Test" > $manifest
+echo "Main-Class: com.etsy.tests.Test" > $manifest
 sl=`find project -name '*scala-library.jar'`
 echo "Class-Path: $PWD/$sl" >> $manifest
 

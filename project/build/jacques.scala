@@ -14,7 +14,8 @@ class JacquesProject(info : ProjectInfo) extends ProguardProject(info)
 
   override def proguardOptions = 
     keep("com.etsy") :: proguardKeepAllScala :: 
-    keep("joptsimple") :: keep("org.scala_tools") :: keep("com.sun.jdi") :: Nil
+    keep("joptsimple") :: keep("org.scala_tools") :: keep("com.sun.jdi") :: 
+    keep("com.sun.tools.jdi") :: Nil
     
   def scalaLibraryJarPath = Path.fromFile(scalaLibraryJar)
   override def proguardInJars = super.proguardInJars +++ scalaLibraryJarPath

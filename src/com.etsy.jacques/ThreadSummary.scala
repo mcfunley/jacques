@@ -13,11 +13,8 @@ object threadSummary {
     val loc = f0.location
     sb.append("Thread %s at: %s".format(t.name, loc.format))
     
-    options.`package` match {
-      case Some(p) => t.framesInPackage(p).filter(_ != f0).foreach { f =>
+    t.framesInPackages(options.`package`).filter(_ != f0).foreach { f =>
         sb.append("\n   at ").append(f.location.format)
-      }
-      case None => 
     }
     
     sb.toString

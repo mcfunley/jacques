@@ -14,7 +14,11 @@ object Implicits {
     def format = { 
       val m = l.method
       val t = l.declaringType
-      val args = m.argumentTypeNames.asScala.reduceLeft(_+","+_)
+      val args = m.argumentTypeNames.asScala match {
+        case Nil => ""
+        case as => as.reduceLeft(_+","+_)
+      }
+
       val line = if(l.lineNumber > 0) l.lineNumber.toString else "?"
       "%s %s::%s(%s) (%s:%s)".format(
         m.returnTypeName, t.name, m.name, args, l.sourcePath, line)
@@ -30,14 +34,21 @@ object Implicits {
       }
 
     def framesInPackage(packageName : String) : List[StackFrame] = 
-      t.frames.asScala.filter(_.isInPackage(packageName)).toList
+      framesInPackages(List(packageName))
+
+    def framesInPackages(packageNames : Seq[String]) : List[StackFrame] = 
+      t.frames.asScala.filter(_.isInPackages(packageNames)).toList
+
 
   }
   
   class StackFrameImplicits(f : StackFrame) {
-    def isInPackage(packageName : String) : Boolean = {
+    def isInPackage(packageName : String) : Boolean = 
+      isInPackages(List(packageName))
+
+    def isInPackages(packageNames : Seq[String]) : Boolean = {
       val tn = f.location.declaringType.name
-      tn startsWith packageName
+      packageNames.exists(tn startsWith _)
     }
 
   }

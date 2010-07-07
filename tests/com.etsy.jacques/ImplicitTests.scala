@@ -51,6 +51,12 @@ class ImplicitTests extends Spec with ShouldMatchers {
       when(l.lineNumber).thenReturn(-1)
       l.format should include (":?")
     }
+
+    it("should not puke on an empty arglist") {
+      val l = mockedLocation
+      when(l.method.argumentTypeNames).thenReturn(List[String]().asJava)
+      l.format should not be ("")
+    }
   }
 
 

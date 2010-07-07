@@ -17,12 +17,16 @@ class OptionsSpec extends Spec with ShouldMatchers {
       opts("--host", "foo").host should be ("foo")
     }
 
-    it("should accept the package when provided") {
-      opts("--package", "foo").`package` should be (Some("foo"))
+    it("should accept one package when provided") {
+      opts("--package", "foo").`package` should be (Array("foo"))
     }
 
-    it("should map the package to None when not provided") {
-      opts("").`package` should be (None)
+    it("should map the package to [] when not provided") {
+      opts("").`package`.length should be (0)
+    }
+
+    it("should accept multiple package names") {
+      opts("--package", "foo,bar").`package` should be (Array("foo", "bar"))
     }
 
   }

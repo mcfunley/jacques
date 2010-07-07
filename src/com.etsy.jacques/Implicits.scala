@@ -15,8 +15,8 @@ object Implicits {
       val m = l.method
       val t = l.declaringType
       val args = m.argumentTypeNames.asScala match {
-        case Nil => ""
-        case as => as.reduceLeft(_+","+_)
+        case as if as.length > 0 => as.reduceLeft(_+","+_)
+        case _ => ""
       }
 
       val line = if(l.lineNumber > 0) l.lineNumber.toString else "?"
